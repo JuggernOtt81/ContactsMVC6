@@ -6,12 +6,12 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
-using RailwayMVC6.Models;
+using ContactsMVC6.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace RailwayMVC6.Areas.Identity.Pages.Account.Manage
+namespace ContactsMVC6.Areas.Identity.Pages.Account.Manage
 {
     public class IndexModel : PageModel
     {

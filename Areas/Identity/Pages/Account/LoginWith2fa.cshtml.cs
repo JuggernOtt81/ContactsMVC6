@@ -9,11 +9,11 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
-using RailwayMVC6.Models;
+using ContactsMVC6.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 
-namespace RailwayMVC6.Areas.Identity.Pages.Account
+namespace ContactsMVC6.Areas.Identity.Pages.Account
 {
     public class LoginWith2faModel : PageModel
     {

@@ -1,8 +1,8 @@
-﻿using RailwayMVC6.Models;
+﻿using ContactsMVC6.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace RailwayMVC6.Data
+namespace ContactsMVC6.Data
 {
     public class ApplicationDbContext : IdentityDbContext<AppUser>
     {

@@ -7,13 +7,13 @@ using System.ComponentModel.DataAnnotations;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
-using RailwayMVC6.Models;
+using ContactsMVC6.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 
-namespace RailwayMVC6.Areas.Identity.Pages.Account
+namespace ContactsMVC6.Areas.Identity.Pages.Account
 {
     public class ResetPasswordModel : PageModel
     {

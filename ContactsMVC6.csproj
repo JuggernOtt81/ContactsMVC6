@@ -3,7 +3,7 @@
 		<TargetFramework>net6.0</TargetFramework>
 		<Nullable>enable</Nullable>
 		<ImplicitUsings>enable</ImplicitUsings>
-		<UserSecretsId>aspnet-RailwayMVC6-F0A7C211-2C49-491C-8E68-835A53100304</UserSecretsId>
+		<UserSecretsId>aspnet-ContactsMVC6-F0A7C211-2C49-491C-8E68-835A53100304</UserSecretsId>
 		<BaseOutputPath>bin</BaseOutputPath>
 		<DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
 		<InvariantGlobalization>true</InvariantGlobalization>

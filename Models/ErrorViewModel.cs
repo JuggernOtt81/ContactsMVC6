@@ -1,4 +1,4 @@
-namespace RailwayMVC6.Models
+namespace ContactsMVC6.Models
 {
     public class ErrorViewModel
     {
