@@ -1,4 +1,5 @@
 using ContactsMVC6.Data;
+using ContactsMVC6.Helpers;
 using ContactsMVC6.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -17,7 +18,8 @@ builder.Services.AddDefaultIdentity<AppUser>(options => options.SignIn.RequireCo
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
-
+var scope = app.Services.CreateScope();
+await DataHelper.ManageDataAsync(scope.ServiceProvider);
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
