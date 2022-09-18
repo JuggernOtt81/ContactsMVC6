@@ -9,16 +9,22 @@ using ContactsMVC6.Data;
 using ContactsMVC6.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
+using ContactsMVC6.Enums;
 
 namespace ContactsMVC6.Controllers
 {
     public class ContactsController : Controller
     {
         private readonly ApplicationDbContext _context;
+        //generate a private user manager instance of AppUser
+        private readonly UserManager<AppUser> _userManager;
 
-        public ContactsController(ApplicationDbContext context)
+        //add the user manager to the controller as a parameter
+        public ContactsController(ApplicationDbContext context, UserManager<AppUser> userManager)
         {
             _context = context;
+            //inject the private user manager here
+            _userManager = userManager;
         }
 
         // GET: Contacts
@@ -54,6 +60,7 @@ namespace ContactsMVC6.Controllers
         public IActionResult Create()
         {
             ViewData["AppUserId"] = new SelectList(_context.Users, "Id", "Id");
+            ViewData["StatesList"] = new SelectList(Enum.GetValues(typeof(States)).Cast<States>().ToList());
             return View();
         }
 
@@ -63,16 +70,27 @@ namespace ContactsMVC6.Controllers
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,AppUserId,FirstName,LastName,EmailAddress,BirthDate,Address1,Address2,City,State,ZipCode,PhoneNumber,Created,ImageData,ImageType")] Contact contact)
+        public async Task<IActionResult> Create([Bind("Id,FirstName,LastName,EmailAddress,BirthDate,Address1,Address2,City,State,ZipCode,PhoneNumber,Created,ImageFile")] Contact contact)
         {
+            //if something is REQUIRED by the model, but it's not going to be provided by the user input form, REMOVE it from the ModelState to avoid validation errors!
+            ModelState.Remove("AppUserId");
             if (ModelState.IsValid)
             {
+                //generate the AppUserId, it is required but it is not provided by the form
+                contact.AppUserId = _userManager.GetUserId(User);
+                //generate the created date/time
+                contact.Created = DateTime.SpecifyKind(DateTime.Now, DateTimeKind.Utc);
+
+                if (contact.BirthDate != null)
+                {
+                    contact.BirthDate = DateTime.SpecifyKind(contact.BirthDate.Value, DateTimeKind.Utc);
+                }
+
                 _context.Add(contact);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AppUserId"] = new SelectList(_context.Users, "Id", "Id", contact.AppUserId);
-            return View(contact);
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: Contacts/Edit/5
@@ -165,14 +183,14 @@ namespace ContactsMVC6.Controllers
             {
                 _context.Contacts.Remove(contact);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool ContactExists(int id)
         {
-          return _context.Contacts.Any(e => e.Id == id);
+            return _context.Contacts.Any(e => e.Id == id);
         }
     }
 }

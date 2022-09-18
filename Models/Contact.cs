@@ -21,6 +21,7 @@ namespace ContactsMVC6.Models
         [StringLength(50, ErrorMessage = "The {0} must be at least {2} but no more than {1} characters in length.", MinimumLength = 2)]
         public string? LastName { get; set; }
         [Required]
+        [Display(Name = "Email Address")]
         [DataType(DataType.EmailAddress)]
         public string? EmailAddress { get; set; }
         [NotMapped]
@@ -30,7 +31,9 @@ namespace ContactsMVC6.Models
         public DateTime? BirthDate { get; set; }
 
         [Required]
+        [Display(Name = "Address")]
         public string? Address1 { get; set; }
+        [Display(Name = "Address, line 2")]
         public string? Address2 { get; set; }
         [Required]
         public string? City { get; set; }
