@@ -167,7 +167,10 @@ namespace ContactsMVC6.Areas.Identity.Pages.Account
         {
             try
             {
-                return Activator.CreateInstance<AppUser>();
+                AppUser user = Activator.CreateInstance<AppUser>();
+                user.FirstName = Input.FirstName;
+                user.LastName = Input.LastName;
+                return user;
             }
             catch
             {
