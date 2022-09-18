@@ -5,12 +5,12 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
-using ContactsMVC6.Models;
+using RailwayMVC6.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace ContactsMVC6.Areas.Identity.Pages.Account.Manage
+namespace RailwayMVC6.Areas.Identity.Pages.Account.Manage
 {
     public class SetPasswordModel : PageModel
     {

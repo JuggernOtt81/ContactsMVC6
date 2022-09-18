@@ -1,7 +1,7 @@
-﻿using ContactsMVC6.Data;
+﻿using RailwayMVC6.Data;
 using Microsoft.EntityFrameworkCore;
 
-namespace ContactsMVC6.Helpers
+namespace RailwayMVC6.Helpers
 {
     public static class DataHelper
     {

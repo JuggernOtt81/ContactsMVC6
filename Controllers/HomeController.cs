@@ -1,8 +1,8 @@
-﻿using ContactsMVC6.Models;
+﻿using RailwayMVC6.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
-namespace ContactsMVC6.Controllers
+namespace RailwayMVC6.Controllers
 {
     public class HomeController : Controller
     {

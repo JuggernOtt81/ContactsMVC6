@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.AspNetCore.Identity;
-namespace ContactsMVC6.Models
+namespace RailwayMVC6.Models
 {
     public class AppUser : IdentityUser
     {

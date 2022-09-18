@@ -1,6 +1,6 @@
 ﻿using Npgsql;
 
-namespace ContactsMVC6.Helpers
+namespace RailwayMVC6.Helpers
 {
 
     public static class ConnectionHelper

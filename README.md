@@ -1,4 +1,4 @@
-# ContactsMVC6
+# RailwayMVC6
 
 note #1
 using 'user secrets' in visual studio for the postgres connection string
