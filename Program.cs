@@ -1,11 +1,13 @@
+using ContactsMVC6;
 using ContactsMVC6.Data;
 using ContactsMVC6.Helpers;
 using ContactsMVC6.Models;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using ContactsMVC6;
 using ContactsMVC6.Services;
 using ContactsMVC6.Services.Interfaces;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+
+
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
@@ -22,6 +24,7 @@ builder.Services.AddControllersWithViews();
 
 //custom services
 builder.Services.AddScoped<IImageService, ImageService>();
+builder.Services.AddScoped<IAddressBookService, AddressBookService>();
 
 var app = builder.Build();
 var scope = app.Services.CreateScope();

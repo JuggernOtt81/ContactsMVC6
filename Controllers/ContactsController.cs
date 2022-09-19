@@ -21,16 +21,19 @@ namespace ContactsMVC6.Controllers
         //generate a private user manager instance of AppUser
         private readonly UserManager<AppUser> _userManager;
         private readonly IImageService _imageService;
+        private readonly IAddressBookService _addressBookService;
 
         //add the user manager to the controller as a parameter
         public ContactsController(ApplicationDbContext context, 
             UserManager<AppUser> userManager,
-            IImageService imageService)
+            IImageService imageService,
+            IAddressBookService addressBookService)
         {
             _context = context;
             //inject the private user manager here
             _userManager = userManager;
             _imageService = imageService;
+            _addressBookService = addressBookService;
         }
 
         // GET: Contacts
@@ -63,10 +66,11 @@ namespace ContactsMVC6.Controllers
 
         // GET: Contacts/Create
         [Authorize]
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            ViewData["AppUserId"] = new SelectList(_context.Users, "Id", "Id");
-            ViewData["StatesList"] = new SelectList(Enum.GetValues(typeof(States)).Cast<States>().ToList());
+            string appUserId = _userManager.GetUserId(User);
+            ViewData["StateList"] = new SelectList(Enum.GetValues(typeof(States)).Cast<States>().ToList());
+            ViewData["CategoryList"] = new MultiSelectList(await _addressBookService.GetUserCategoriesAsync(appUserId), "Id", "Name");
             return View();
         }
 
