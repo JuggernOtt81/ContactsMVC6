@@ -80,7 +80,7 @@ namespace ContactsMVC6.Controllers
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,FirstName,LastName,EmailAddress,BirthDate,Address1,Address2,City,State,ZipCode,PhoneNumber,Created,ImageFile")] Contact contact)
+        public async Task<IActionResult> Create([Bind("Id,FirstName,LastName,EmailAddress,BirthDate,Address1,Address2,City,State,ZipCode,PhoneNumber,Created,ImageFile")] Contact contact, List<int> CategoryList)
         {
             //if something is REQUIRED by the model, but it's not going to be provided by the user input form, REMOVE it from the ModelState to avoid validation errors!
             ModelState.Remove("AppUserId");
@@ -103,6 +103,14 @@ namespace ContactsMVC6.Controllers
 
                 _context.Add(contact);
                 await _context.SaveChangesAsync();
+
+                //loop over all selected categories
+                foreach (int categoryId in CategoryList)
+                {
+                    await _addressBookService.AddContactToCategoryAsync(categoryId, contact.Id);
+                }
+                //save each category selected to the category tables
+
                 return RedirectToAction(nameof(Index));
             }
             return RedirectToAction(nameof(Index));
