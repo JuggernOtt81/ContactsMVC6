@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Authorization;
 using ContactsMVC6.Enums;
 using ContactsMVC6.Services;
 using ContactsMVC6.Services.Interfaces;
+using System.Collections;
 
 namespace ContactsMVC6.Controllers
 {
@@ -40,8 +41,24 @@ namespace ContactsMVC6.Controllers
         [Authorize]
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Contacts.Include(c => c.AppUser);
-            return View(await applicationDbContext.ToListAsync());
+            //var applicationDbContext = _context.Contacts.Include(c => c.AppUser);
+            var contacts = new List<Contact>();
+            string appUserId = _userManager.GetUserId(User);
+            //return userId and the contacts and categories associated
+            AppUser appUser = _context.Users
+                                      .Include(c => c.Contacts)
+                                      .ThenInclude(c => c.Categories)
+                                      .FirstOrDefault(u => u.Id == appUserId);
+
+            var categoriesCollection = appUser.Categories;
+            contacts = appUser.Contacts.OrderBy(c => c.LastName)
+                                       .ThenBy(c => c.FirstName)
+                                       .ToList();
+
+            IList categories = categoriesCollection.OrderBy(l => l.Name).ToList();          
+            ViewData["CategoryId"] = new SelectList(categories, "Id", "Name");
+
+            return View(contacts);
         }
 
         // GET: Contacts/Details/5

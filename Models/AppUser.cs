@@ -1,6 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.AspNetCore.Identity;
+using ContactsMVC6.Data;
+using ContactsMVC6.Models;
+using Microsoft.AspNetCore.Authorization;
+using ContactsMVC6.Enums;
+using ContactsMVC6.Services;
+using ContactsMVC6.Services.Interfaces;
 namespace ContactsMVC6.Models
 {
     public class AppUser : IdentityUser
@@ -15,5 +21,7 @@ namespace ContactsMVC6.Models
         public string? LastName { get; set; }
         [NotMapped]
         public string? FullName { get { return $"{FirstName} {LastName}"; } }
+        public virtual ICollection<Category> Categories { get; set; } = new HashSet<Category>();
+        public virtual ICollection<Contact> Contacts { get; set; } = new HashSet<Contact>();
     }
 }
