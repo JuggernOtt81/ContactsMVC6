@@ -10,6 +10,8 @@ using ContactsMVC6.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
 using ContactsMVC6.Enums;
+using ContactsMVC6.Services;
+using ContactsMVC6.Services.Interfaces;
 
 namespace ContactsMVC6.Controllers
 {
@@ -18,13 +20,17 @@ namespace ContactsMVC6.Controllers
         private readonly ApplicationDbContext _context;
         //generate a private user manager instance of AppUser
         private readonly UserManager<AppUser> _userManager;
+        private readonly IImageService _imageService;
 
         //add the user manager to the controller as a parameter
-        public ContactsController(ApplicationDbContext context, UserManager<AppUser> userManager)
+        public ContactsController(ApplicationDbContext context, 
+            UserManager<AppUser> userManager,
+            IImageService imageService)
         {
             _context = context;
             //inject the private user manager here
             _userManager = userManager;
+            _imageService = imageService;
         }
 
         // GET: Contacts
@@ -84,6 +90,11 @@ namespace ContactsMVC6.Controllers
                 if (contact.BirthDate != null)
                 {
                     contact.BirthDate = DateTime.SpecifyKind(contact.BirthDate.Value, DateTimeKind.Utc);
+                }
+                if (contact.ImageFile != null)
+                {
+                    contact.ImageData = await _imageService.ConvertFileToByteArrayAsync(contact.ImageFile);
+                    contact.ImageType = contact.ImageFile.ContentType;
                 }
 
                 _context.Add(contact);

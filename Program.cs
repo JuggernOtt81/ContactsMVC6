@@ -3,6 +3,9 @@ using ContactsMVC6.Helpers;
 using ContactsMVC6.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using ContactsMVC6;
+using ContactsMVC6.Services;
+using ContactsMVC6.Services.Interfaces;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
@@ -16,6 +19,9 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddDefaultIdentity<AppUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews();
+
+//custom services
+builder.Services.AddScoped<IImageService, ImageService>();
 
 var app = builder.Build();
 var scope = app.Services.CreateScope();

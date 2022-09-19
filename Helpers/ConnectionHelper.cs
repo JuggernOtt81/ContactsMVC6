@@ -15,9 +15,9 @@ namespace ContactsMVC6.Helpers
         //build the connection string from the environment. i.e. Heroku
         private static string BuildConnectionString(string databaseUrl)
         {
-            Uri databaseUri = new Uri(databaseUrl);
+            Uri databaseUri = new(databaseUrl);
             string[] userInfo = databaseUri.UserInfo.Split(':');
-            NpgsqlConnectionStringBuilder builder = new NpgsqlConnectionStringBuilder
+            NpgsqlConnectionStringBuilder builder = new()
             {
                 Host = databaseUri.Host,
                 Port = databaseUri.Port,
