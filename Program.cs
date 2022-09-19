@@ -6,17 +6,13 @@ using ContactsMVC6.Services;
 using ContactsMVC6.Services.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-
-
+using System.Configuration;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
+var connectionString = builder.Configuration.GetSection("pgSettings")["pgConnection"];
 
-// Add services to the container.
-//var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-string connectionString = builder.Configuration.GetSection("pgSettings")["pgConnection"];
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
+builder.Services.AddDbContext<ApplicationDbContext>(async options =>
     options.UseNpgsql(connectionString));
-
 
 builder.Services.AddDefaultIdentity<AppUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<ApplicationDbContext>();
@@ -26,8 +22,8 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<IImageService, ImageService>();
 builder.Services.AddScoped<IAddressBookService, AddressBookService>();
 
-var app = builder.Build();
-var scope = app.Services.CreateScope();
+WebApplication app = builder.Build();
+IServiceScope scope = app.Services.CreateScope();
 await DataHelper.ManageDataAsync(scope.ServiceProvider);
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

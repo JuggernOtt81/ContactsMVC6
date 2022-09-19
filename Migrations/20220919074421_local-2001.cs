@@ -6,7 +6,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace ContactsMVC6.Migrations
 {
-    public partial class local003 : Migration
+    public partial class local2001 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

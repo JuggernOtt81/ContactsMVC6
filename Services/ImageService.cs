@@ -8,7 +8,7 @@ namespace ContactsMVC6.Services
         private readonly string defaultImage = "img/DefaultContactImage.png";
         public string ConvertByteArrayToFile(byte[] fileData, string extension)
         {
-            if (fileData == null) return defaultImage;
+            if (fileData is null) return defaultImage;
             try
             {
                 string imageBase64Data = Convert.ToBase64String(fileData);

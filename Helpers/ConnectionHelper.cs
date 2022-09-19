@@ -3,7 +3,7 @@
 namespace ContactsMVC6.Helpers
 {
 
-    public static class ConnectionHelper
+    public class ConnectionHelper
     {
         public static string GetConnectionString(IConfiguration configuration)
         {

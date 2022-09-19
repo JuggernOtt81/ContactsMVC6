@@ -111,7 +111,6 @@ namespace ContactsMVC6.Controllers
                 }
                 //save each category selected to the category tables
 
-                return RedirectToAction(nameof(Index));
             }
             return RedirectToAction(nameof(Index));
         }

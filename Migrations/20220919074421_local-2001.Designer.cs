@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace ContactsMVC6.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220919022524_local-1001")]
-    partial class local1001
+    [Migration("20220919074421_local-2001")]
+    partial class local2001
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

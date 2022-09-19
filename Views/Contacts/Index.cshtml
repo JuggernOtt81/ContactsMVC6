@@ -5,7 +5,7 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>My Contacts</h1>
+@*<h1>My Contacts</h1>*@
 
 <div class="row">
     <div class="col-12 text-end mb-2">
@@ -79,14 +79,17 @@
 </div>
 
 
-<table class="table">
+@*<table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.FirstName)
+                @Html.DisplayNameFor(model => model.Id)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.LastName)
+                @Html.DisplayNameFor(model => model.AppUserId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FullName)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.EmailAddress)
@@ -119,6 +122,9 @@
                 @Html.DisplayNameFor(model => model.ImageData)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.ImageFile)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.ImageType)
             </th>
             <th>
@@ -132,10 +138,13 @@
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.FirstName)
+                    @Html.DisplayFor(modelItem => item.Id)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.LastName)
+                    @Html.DisplayFor(modelItem => item.AppUserId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FullName)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.EmailAddress)
@@ -168,6 +177,9 @@
                     @Html.DisplayFor(modelItem => item.ImageData)
                 </td>
                 <td>
+                    @Html.DisplayFor(modelItem => item.ImageFile)
+                </td>
+                <td>
                     @Html.DisplayFor(modelItem => item.ImageType)
                 </td>
                 <td>
@@ -181,4 +193,4 @@
             </tr>
         }
     </tbody>
-</table>
+</table>*@
