@@ -7,7 +7,7 @@ namespace ContactsMVC6.Helpers
     {
         public static string GetConnectionString(IConfiguration configuration)
         {
-            string? connectionString = configuration.GetConnectionString("DefaultConnection");
+            string? connectionString = configuration.GetSection("pgSettings")["pgConnection"]; 
             string? databaseUrl = Environment.GetEnvironmentVariable("DATABASE_URL");
             return string.IsNullOrEmpty(databaseUrl) ? connectionString : BuildConnectionString(databaseUrl);
         }
@@ -15,8 +15,8 @@ namespace ContactsMVC6.Helpers
         //build the connection string from the environment. i.e. Heroku
         private static string BuildConnectionString(string databaseUrl)
         {
-            var databaseUri = new Uri(databaseUrl);
-            var userInfo = databaseUri.UserInfo.Split(':');
+            Uri databaseUri = new Uri(databaseUrl);
+            string[] userInfo = databaseUri.UserInfo.Split(':');
             NpgsqlConnectionStringBuilder builder = new NpgsqlConnectionStringBuilder
             {
                 Host = databaseUri.Host,
