@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.Configuration;
 
-WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
+var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetSection("pgSettings")["pgConnection"];
 
 builder.Services.AddDbContext<ApplicationDbContext>(async options =>
@@ -22,8 +22,8 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<IImageService, ImageService>();
 builder.Services.AddScoped<IAddressBookService, AddressBookService>();
 
-WebApplication app = builder.Build();
-IServiceScope scope = app.Services.CreateScope();
+var app = builder.Build();
+var scope = app.Services.CreateScope();
 await DataHelper.ManageDataAsync(scope.ServiceProvider);
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
