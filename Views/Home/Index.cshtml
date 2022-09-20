@@ -2,8 +2,17 @@
     ViewData["Title"] = "Home Page";
     Layout = "~/Views/Shared/_LayoutLander.cshtml";
 }
+<style>
+    <link rel="stylesheet" href="~/css/image-modal.css" asp-append-version="true" / >
+</style>
 <div class="row align-items-center h-100 ">
     <div class="col-12 col-md-6 col-lg-5 order-last order-md-first">
+        <img id="myImg" src="/img/underConstruction2.png" alt="under construction" style="width:0%;max-width:250px">
+        <div id="myModal" class="modal">
+            <span class="close" style="background-color:orange; color:blue; font-size:larger;">&times; CLOSE</span>
+            <img class="modal-content" id="img01">
+            <div id="caption"></div>
+        </div>
         <div class="ms-5">
             <h1 class="heroTitle">
                 All your <span class="texthighlight">contacts</span> in
@@ -24,6 +33,12 @@
         </div>
     </div>
     <div class="col-12 col-md-6 col-lg-7 text-center">
+        <img id="myImg" src="/img/underConstruction2.png" alt="under construction" style="width:0%;max-width:250px">
+        <div id="myModal" class="modal">
+            <span class="close" style="background-color:orange; color:blue; font-size:larger;">&times; CLOSE</span>
+            <img class="modal-content" id="img01">
+            <div id="caption"></div>
+        </div>
             @*<img src="/img/contactProLanding.png" class="img-fluid">*@
             @*<img src="/img/contacts logo-bw.png" class="img-fluid">*@
             @*<img src="/img/contacts logo-gold.png" class="img-fluid">*@
@@ -32,3 +47,25 @@
     </div>
 </div>
 
+<script>
+    // Get the modal
+    var modal = document.getElementById("myModal");
+
+    // Get the image and insert it inside the modal - use its "alt" text as a caption
+    var img = document.getElementById("myImg");
+    var modalImg = document.getElementById("img01");
+    var captionText = document.getElementById("caption");
+    img.onload = function () {
+        modal.style.display = "block";
+        modalImg.src = this.src;
+        captionText.innerHTML = this.alt;
+    }
+
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("close")[0];
+
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function () {
+        modal.style.display = "none";
+    }
+</script>
