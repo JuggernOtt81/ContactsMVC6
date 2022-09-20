@@ -39,24 +39,34 @@ namespace ContactsMVC6.Controllers
 
         // GET: Contacts
         [Authorize]
-        public async Task<IActionResult> Index()
+        public IActionResult Index(int categoryId)
         {
-            //var applicationDbContext = _context.Contacts.Include(c => c.AppUser);
             var contacts = new List<Contact>();
             string appUserId = _userManager.GetUserId(User);
+
             //return userId and the contacts and categories associated
             AppUser appUser = _context.Users
                                       .Include(c => c.Contacts)
                                       .ThenInclude(c => c.Categories)
                                       .FirstOrDefault(u => u.Id == appUserId);
 
-            var categoriesCollection = appUser.Categories;
-            contacts = appUser.Contacts.OrderBy(c => c.LastName)
-                                       .ThenBy(c => c.FirstName)
-                                       .ToList();
-
-            IList categories = categoriesCollection.OrderBy(l => l.Name).ToList();          
-            ViewData["CategoryId"] = new SelectList(categories, "Id", "Name");
+            var categories = appUser.Categories;
+            if (categoryId == 0)
+            {
+                contacts = appUser.Contacts.OrderBy(c => c.LastName)
+                                           .ThenBy(c => c.FirstName)
+                                           .ToList();
+            }
+            else
+            {
+                contacts = appUser.Categories.FirstOrDefault(c => c.Id == categoryId)
+                                  .Contacts
+                                  .OrderBy(c => c.LastName)
+                                  .ThenBy(c => c.FirstName)
+                                  .ToList();
+            }
+            //IList categories = categories.OrderBy(l => l.Name).ToList();          
+            ViewData["CategoryId"] = new SelectList(categories, "Id", "Name", categoryId);
 
             return View(contacts);
         }
