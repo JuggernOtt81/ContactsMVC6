@@ -10,10 +10,10 @@ using System.Configuration;
 using Microsoft.Extensions.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
-var connectionString = builder.Configuration.GetSection("pgSettings")["pgConnection"];
-var databaseUrl = Environment.GetEnvironmentVariable("DATABASE_URL");
 //ConnectionHelper.GetConnectionString(connectionString, databaseUrl);
 
+var connectionString = builder.Configuration.GetSection("pgSettings")["pgConnection"];
+var databaseUrl = Environment.GetEnvironmentVariable("DATABASE_URL");
 builder.Services.AddDbContext<ApplicationDbContext>(async options =>
     options.UseNpgsql(ConnectionHelper.GetConnectionString(connectionString, databaseUrl)));
 
