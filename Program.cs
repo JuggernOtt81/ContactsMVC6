@@ -7,9 +7,13 @@ using ContactsMVC6.Services.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.Configuration;
+using Microsoft.Extensions.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
-var connectionString = builder.Configuration.GetSection("pgSettings")["pgConnection"];
+//var connectionString = builder.Configuration.GetSection("pgSettings")["pgConnection"];
+
+Func<IConfiguration, string> shit = new ConnectionHelper().GetConnectionString;
+var connectionString = shit.ToString();
 
 builder.Services.AddDbContext<ApplicationDbContext>(async options =>
     options.UseNpgsql(connectionString));

@@ -1,19 +1,31 @@
-﻿using Npgsql;
+﻿using ContactsMVC6;
+using ContactsMVC6.Data;
+using ContactsMVC6.Helpers;
+using ContactsMVC6.Models;
+using ContactsMVC6.Services;
+using ContactsMVC6.Services.Interfaces;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using System.Configuration;
+using Microsoft.Extensions.Configuration;
+using Npgsql;
 
 namespace ContactsMVC6.Helpers
 {
 
     public class ConnectionHelper
     {
-        public static string GetConnectionString(IConfiguration configuration)
+        public string GetConnectionString(IConfiguration configuration)
         {
             string? connectionString = configuration.GetSection("pgSettings")["pgConnection"]; 
             string? databaseUrl = Environment.GetEnvironmentVariable("DATABASE_URL");
-            return string.IsNullOrEmpty(databaseUrl) ? connectionString : BuildConnectionString(databaseUrl);
+            var finalString = string.IsNullOrEmpty(databaseUrl) ? connectionString : BuildConnectionString(databaseUrl);
+            Program.ReferenceEquals(connectionString, finalString);
+            return finalString;
         }
-
+        
         //build the connection string from the environment. i.e. Heroku
-        private static string BuildConnectionString(string databaseUrl)
+        public string BuildConnectionString(string databaseUrl)
         {
             Uri databaseUri = new(databaseUrl);
             string[] userInfo = databaseUri.UserInfo.Split(':');
@@ -28,6 +40,6 @@ namespace ContactsMVC6.Helpers
                 TrustServerCertificate = true
             };
             return builder.ToString();
-        }
+        }        
     }
 }
