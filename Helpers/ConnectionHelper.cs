@@ -12,24 +12,21 @@ using Npgsql;
 
 namespace ContactsMVC6.Helpers
 {
-
-    public class ConnectionHelper
+    public static class ConnectionHelper
     {
-        public string GetConnectionString(IConfiguration configuration)
+        public static string GetConnectionString(string connectionString, string databaseUrl)
         {
-            string? connectionString = configuration.GetSection("pgSettings")["pgConnection"]; 
-            string? databaseUrl = Environment.GetEnvironmentVariable("DATABASE_URL");
-            var finalString = string.IsNullOrEmpty(databaseUrl) ? connectionString : BuildConnectionString(databaseUrl);
-            Program.ReferenceEquals(connectionString, finalString);
-            return finalString;
+            //var connectionString = configuration.GetConnectionString("DefaultConnection");
+            //var databaseUrl = Environment.GetEnvironmentVariable("DATABASE_URL");
+            return string.IsNullOrEmpty(databaseUrl) ? connectionString : BuildConnectionString(databaseUrl);
         }
-        
+    
         //build the connection string from the environment. i.e. Heroku
-        public string BuildConnectionString(string databaseUrl)
+        private static string BuildConnectionString(string databaseUrl)
         {
-            Uri databaseUri = new(databaseUrl);
-            string[] userInfo = databaseUri.UserInfo.Split(':');
-            NpgsqlConnectionStringBuilder builder = new()
+            var databaseUri = new Uri(databaseUrl);
+            var userInfo = databaseUri.UserInfo.Split(':');
+            var builder = new NpgsqlConnectionStringBuilder
             {
                 Host = databaseUri.Host,
                 Port = databaseUri.Port,
@@ -40,6 +37,6 @@ namespace ContactsMVC6.Helpers
                 TrustServerCertificate = true
             };
             return builder.ToString();
-        }        
+        }
     }
 }
