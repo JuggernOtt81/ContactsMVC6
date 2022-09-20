@@ -25,7 +25,7 @@ namespace ContactsMVC6.Controllers
         private readonly IAddressBookService _addressBookService;
 
         //add the user manager to the controller as a parameter
-        public ContactsController(ApplicationDbContext context, 
+        public ContactsController(ApplicationDbContext context,
             UserManager<AppUser> userManager,
             IImageService imageService,
             IAddressBookService addressBookService)
@@ -45,12 +45,16 @@ namespace ContactsMVC6.Controllers
             string appUserId = _userManager.GetUserId(User);
 
             //return userId and the contacts and categories associated
+#pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
             AppUser appUser = _context.Users
                                       .Include(c => c.Contacts)
                                       .ThenInclude(c => c.Categories)
                                       .FirstOrDefault(u => u.Id == appUserId);
+#pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
 
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
             var categories = appUser.Categories;
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
             if (categoryId == 0)
             {
                 contacts = appUser.Contacts.OrderBy(c => c.LastName)
@@ -59,17 +63,52 @@ namespace ContactsMVC6.Controllers
             }
             else
             {
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
                 contacts = appUser.Categories.FirstOrDefault(c => c.Id == categoryId)
                                   .Contacts
                                   .OrderBy(c => c.LastName)
                                   .ThenBy(c => c.FirstName)
                                   .ToList();
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
             }
             //IList categories = categories.OrderBy(l => l.Name).ToList();          
             ViewData["CategoryId"] = new SelectList(categories, "Id", "Name", categoryId);
 
             return View(contacts);
         }
+
+        [Authorize]
+        public IActionResult SearchContacts(string searchString)
+        {
+            string appUserId = _userManager.GetUserId(User);
+            var contacts = new List<Contact>();
+
+#pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
+            AppUser appUser = _context.Users
+                                      .Include(_c => _c.Contacts)
+                                      .ThenInclude(_c => _c.Categories)
+                                      .FirstOrDefault(u => u.Id == appUserId);
+#pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
+            if (String.IsNullOrEmpty(searchString))
+            {
+                contacts = appUser.Contacts
+                                  .OrderBy(c => c.LastName)
+                                  .ThenBy(c => c.FirstName)
+                                  .ToList();
+            }
+            else
+            {
+                contacts = appUser.Contacts.Where(c => c.FullName!.ToLower().Contains(searchString.ToLower()))
+                                  .OrderBy(c => c.LastName)
+                                  .ThenBy(c => c.FirstName)
+                                  .ToList();
+            }
+            ViewData["CategoryId"] = new SelectList(appUser.Categories, "Id", "Name", 0);
+
+            return View(nameof(Index), contacts);
+        }
+
+
 
         // GET: Contacts/Details/5
         [Authorize]
