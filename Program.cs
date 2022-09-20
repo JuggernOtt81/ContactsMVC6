@@ -12,10 +12,10 @@ using Microsoft.Extensions.Configuration;
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetSection("pgSettings")["pgConnection"];
 var databaseUrl = Environment.GetEnvironmentVariable("DATABASE_URL");
-ConnectionHelper.GetConnectionString(connectionString, databaseUrl);
+//ConnectionHelper.GetConnectionString(connectionString, databaseUrl);
 
 builder.Services.AddDbContext<ApplicationDbContext>(async options =>
-    options.UseNpgsql(connectionString));
+    options.UseNpgsql(ConnectionHelper.GetConnectionString(connectionString, databaseUrl)));
 
 builder.Services.AddDefaultIdentity<AppUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<ApplicationDbContext>();
