@@ -214,7 +214,7 @@ namespace ContactsMVC6.Controllers
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,AppUserId,FirstName,LastName,EmailAddress,BirthDate,Address1,Address2,City,State,ZipCode,PhoneNumber,Created,ImageData,ImageType,ImageFile")] Contact contact)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,AppUserId,FirstName,LastName,EmailAddress,BirthDate,Address1,Address2,City,State,ZipCode,PhoneNumber,Created,ImageData,ImageType,ImageFile")] Contact contact, List<int> CategoryList)
         {
 
             if (id != contact.Id)
@@ -237,9 +237,21 @@ namespace ContactsMVC6.Controllers
                         contact.ImageData = await _imageService.ConvertFileToByteArrayAsync(contact.ImageFile);
                         contact.ImageType = contact.ImageFile.ContentType;
                     }
-
                     _context.Update(contact);
                     await _context.SaveChangesAsync();
+
+                    //to save new categories:
+                    //1: remove current categories
+                    List<Category> oldCategories = (await _addressBookService.GetContactCategoriesAsync(contact.Id)).ToList();
+                    foreach(Category category in oldCategories)
+                    {
+                        await _addressBookService.RemoveContactFromCategoryAsync(category.Id, contact.Id);
+                    }
+                    //2: add the selected categories
+                    foreach (int categoryId in CategoryList)
+                    {
+                        await _addressBookService.AddContactToCategoryAsync(categoryId, contact.Id);
+                    }                    
                 }
                 catch (DbUpdateConcurrencyException)
                 {
