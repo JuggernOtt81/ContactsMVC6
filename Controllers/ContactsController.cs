@@ -190,12 +190,21 @@ namespace ContactsMVC6.Controllers
                 return NotFound();
             }
 
-            var contact = await _context.Contacts.FindAsync(id);
+
+            //security function to prevent different users from access other users' contacts:
+            //commenting out the scaffolded code, creating new code to select contacts attached to this user only
+            //var contact = await _context.Contacts.FindAsync(id);
+            string appUserId = _userManager.GetUserId(User);
+            var contact = await _context.Contacts.Where(c => c.Id == id && c.AppUserId == appUserId)
+                                                 .FirstOrDefaultAsync();                                              
+            
             if (contact == null)
             {
                 return NotFound();
             }
-            ViewData["AppUserId"] = new SelectList(_context.Users, "Id", "Id", contact.AppUserId);
+
+            ViewData["StateList"] = new SelectList(Enum.GetValues(typeof(States)).Cast<States>().ToList());
+            ViewData["CategoryList"] = new MultiSelectList(await _addressBookService.GetUserCategoriesAsync(appUserId), "Id", "Name", await _addressBookService.GetContactCategoryIdsAsync(contact.Id));
             return View(contact);
         }
 
@@ -205,8 +214,9 @@ namespace ContactsMVC6.Controllers
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,AppUserId,FirstName,LastName,EmailAddress,BirthDate,Address1,Address2,City,State,ZipCode,PhoneNumber,Created,ImageData,ImageType")] Contact contact)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,AppUserId,FirstName,LastName,EmailAddress,BirthDate,Address1,Address2,City,State,ZipCode,PhoneNumber,Created,ImageData,ImageType,ImageFile")] Contact contact)
         {
+
             if (id != contact.Id)
             {
                 return NotFound();
@@ -216,6 +226,18 @@ namespace ContactsMVC6.Controllers
             {
                 try
                 {
+                    contact.Created = DateTime.SpecifyKind(contact.Created, DateTimeKind.Utc);
+                    if(contact.BirthDate != null)
+                    {
+                        contact.BirthDate = DateTime.SpecifyKind(contact.BirthDate.Value, DateTimeKind.Utc);
+                    }
+
+                    if (contact.ImageFile != null)
+                    {
+                        contact.ImageData = await _imageService.ConvertFileToByteArrayAsync(contact.ImageFile);
+                        contact.ImageType = contact.ImageFile.ContentType;
+                    }
+
                     _context.Update(contact);
                     await _context.SaveChangesAsync();
                 }
