@@ -46,8 +46,10 @@ namespace ContactsMVC6.Controllers
 
         // GET: Contacts
         [Authorize]
-        public IActionResult Index(int categoryId)
+        public IActionResult Index(int categoryId, string swalMessage = null)
         {
+            ViewData["SwalMessage"] = swalMessage;
+
             var contacts = new List<Contact>();
             string appUserId = _userManager.GetUserId(User);
 
@@ -147,10 +149,11 @@ namespace ContactsMVC6.Controllers
                 try
                 {
                     await _emailService.SendEmailAsync(ecvm.EmailData.EmailAddress, ecvm.EmailData.Subject, ecvm.EmailData.Body);
-                    return RedirectToAction("Index", "Contacts");
+                    return RedirectToAction("Index", "Contacts", new {swalMessage = "Success: Email Sent!"});
                 }
                 catch
                 {
+                    return RedirectToAction("Index", "Contacts", new { swalMessage = "Error: Something went wrong." });
                     throw;
                 }
             }
