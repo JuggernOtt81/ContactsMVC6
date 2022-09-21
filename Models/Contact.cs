@@ -26,7 +26,7 @@ namespace ContactsMVC6.Models
         [Display(Name = "Last Name")]
         [StringLength(50, ErrorMessage = "The {0} must be at least {2} but no more than {1} characters in length.", MinimumLength = 2)]
         public string? LastName { get; set; }
-        [Required]
+        //[Required]
         [Display(Name = "Email Address")]
         [DataType(DataType.EmailAddress)]
         public string? EmailAddress { get; set; }

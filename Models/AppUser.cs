@@ -20,7 +20,7 @@ namespace ContactsMVC6.Models
         [StringLength(50, ErrorMessage = "The {0} must be at least {2} but no more than {1} characters in length.", MinimumLength = 2)]
         public string? LastName { get; set; }
         [NotMapped]
-        public string? FullName { get { return $"{FirstName} {LastName}"; } }
+        public string FullName { get { return $"{FirstName} {LastName}"; } }
         public virtual ICollection<Category> Categories { get; set; } = new HashSet<Category>();
         public virtual ICollection<Contact> Contacts { get; set; } = new HashSet<Contact>();
     }

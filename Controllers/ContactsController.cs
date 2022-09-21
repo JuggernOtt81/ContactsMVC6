@@ -10,9 +10,13 @@ using ContactsMVC6.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
 using ContactsMVC6.Enums;
+using ContactsMVC6.Models.ViewModels;
 using ContactsMVC6.Services;
 using ContactsMVC6.Services.Interfaces;
 using System.Collections;
+using Microsoft.AspNetCore.Identity.UI.Services;
+using MimeKit;
+using MailKit;
 
 namespace ContactsMVC6.Controllers
 {
@@ -23,18 +27,21 @@ namespace ContactsMVC6.Controllers
         private readonly UserManager<AppUser> _userManager;
         private readonly IImageService _imageService;
         private readonly IAddressBookService _addressBookService;
+        private readonly IEmailSender _emailService;
 
         //add the user manager to the controller as a parameter
         public ContactsController(ApplicationDbContext context,
             UserManager<AppUser> userManager,
             IImageService imageService,
-            IAddressBookService addressBookService)
+            IAddressBookService addressBookService,
+            IEmailSender emailService)
         {
             _context = context;
             //inject the private user manager here
             _userManager = userManager;
             _imageService = imageService;
             _addressBookService = addressBookService;
+            _emailService = emailService;
         }
 
         // GET: Contacts
@@ -45,16 +52,13 @@ namespace ContactsMVC6.Controllers
             string appUserId = _userManager.GetUserId(User);
 
             //return userId and the contacts and categories associated
-#pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
             AppUser appUser = _context.Users
                                       .Include(c => c.Contacts)
                                       .ThenInclude(c => c.Categories)
                                       .FirstOrDefault(u => u.Id == appUserId);
-#pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
-
-#pragma warning disable CS8602 // Dereference of a possibly null reference.
+            
             var categories = appUser.Categories;
-#pragma warning restore CS8602 // Dereference of a possibly null reference.
+            
             if (categoryId == 0)
             {
                 contacts = appUser.Contacts.OrderBy(c => c.LastName)
@@ -63,13 +67,11 @@ namespace ContactsMVC6.Controllers
             }
             else
             {
-#pragma warning disable CS8602 // Dereference of a possibly null reference.
                 contacts = appUser.Categories.FirstOrDefault(c => c.Id == categoryId)
                                   .Contacts
                                   .OrderBy(c => c.LastName)
                                   .ThenBy(c => c.FirstName)
                                   .ToList();
-#pragma warning restore CS8602 // Dereference of a possibly null reference.
             }
             //IList categories = categories.OrderBy(l => l.Name).ToList();          
             ViewData["CategoryId"] = new SelectList(categories, "Id", "Name", categoryId);
@@ -83,12 +85,11 @@ namespace ContactsMVC6.Controllers
             string appUserId = _userManager.GetUserId(User);
             var contacts = new List<Contact>();
 
-#pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
             AppUser appUser = _context.Users
                                       .Include(_c => _c.Contacts)
                                       .ThenInclude(_c => _c.Categories)
                                       .FirstOrDefault(u => u.Id == appUserId);
-#pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
+            
             if (String.IsNullOrEmpty(searchString))
             {
                 contacts = appUser.Contacts
@@ -109,8 +110,50 @@ namespace ContactsMVC6.Controllers
         }
 
         [Authorize]
-        public IActionResult EmailContact(int contactId)
+        //[HttpGet]
+        public async Task<IActionResult> EmailContact(int id)
         {
+            string appUserId = _userManager.GetUserId(User);
+            Contact contact = await _context.Contacts.Where(c => c.Id == id && c.AppUserId == appUserId)
+                                                      .FirstOrDefaultAsync();
+            if (contact == null)
+            {
+                return NotFound();
+            }
+
+            EmailData emailData = new EmailData()
+            {
+                EmailAddress = contact.EmailAddress,
+                FirstName = contact.FirstName,
+                LastName = contact.LastName
+
+            };
+
+            EmailContactViewModel model = new EmailContactViewModel()
+            {
+                Contact = contact,
+                EmailData = emailData
+
+            };
+            return View(model);
+        }
+
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> EmailContact(EmailContactViewModel ecvm)
+        {
+            if (ModelState.IsValid)
+            {                
+                try
+                {
+                    await _emailService.SendEmailAsync(ecvm.EmailData.EmailAddress, ecvm.EmailData.Subject, ecvm.EmailData.Body);
+                    return RedirectToAction("Index", "Contacts");
+                }
+                catch
+                {
+                    throw;
+                }
+            }
             return View();
         }
 

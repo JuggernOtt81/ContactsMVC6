@@ -8,13 +8,14 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.Configuration;
 using Microsoft.Extensions.Configuration;
+using Microsoft.AspNetCore.Identity.UI.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 //ConnectionHelper.GetConnectionString(connectionString, databaseUrl);
 
 var connectionString = builder.Configuration.GetSection("pgSettings")["pgConnection"];
 var databaseUrl = Environment.GetEnvironmentVariable("DATABASE_URL");
-builder.Services.AddDbContext<ApplicationDbContext>(async options =>
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseNpgsql(ConnectionHelper.GetConnectionString(connectionString, databaseUrl)));
 
 builder.Services.AddDefaultIdentity<AppUser>(options => options.SignIn.RequireConfirmedAccount = true)
@@ -24,6 +25,9 @@ builder.Services.AddControllersWithViews();
 //custom services
 builder.Services.AddScoped<IImageService, ImageService>();
 builder.Services.AddScoped<IAddressBookService, AddressBookService>();
+builder.Services.AddScoped<IEmailSender, EmailService>();
+
+builder.Services.Configure<MailSettings>(builder.Configuration.GetSection("MailSettings"));
 
 var app = builder.Build();
 var scope = app.Services.CreateScope();
