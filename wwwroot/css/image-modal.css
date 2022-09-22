@@ -2,54 +2,58 @@
 body {font-family: Arial, Helvetica, sans-serif;}
 
 #myImg {
-  border-radius: 5px;
-  cursor: pointer;
-  transition: 0.3s;
+    border-radius: 95px;
+    cursor: pointer;
+    transition: 0.3s;
+    opacity: 0.4;
+    padding: 20%;
 }
 
-#myImg:hover {opacity: 0.7;}
+#myImg:hover {opacity: 0.4;}
 
 /* The Modal (background) */
 .modal {
-  display: none; /* Hidden by default */
-  position: center; /* Stay in place */
-  z-index: 1; /* Sit on top */
-  padding-top: 100px; /* Location of the box */
-  left: 0;
-  top: 0;
-  width: auto; /* Full width */
-  height: auto; /* Full height */
-  overflow:inherit; /* Enable scroll if needed */
-  background-color: rgb(0,0,0); /* Fallback color */
-  background-color: rgba(0,0,0,0.9); /* Black w/ opacity */
+    display: none; /* Hidden by default */
+    position: center; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    margin: 20%;
+    padding: 20%; /* Location of the box */
+/*    left: 0;
+    top: 0;*/
+    opacity: 0.4;
+    /*width: auto;*/ /* Full width */
+    /*height: auto;*/ /* Full height */
+    overflow: inherit; /* Enable scroll if needed */
+    /*background-color: rgb(0,0,0);*/ /* Fallback color */
+    /*background-color: rgba(0,0,0,0.9);*/ /* Black w/ opacity */
 }
 
 /* Modal Content (image) */
 .modal-content {
-  margin: auto;
+  margin: 20%;
   display: block;
   width: 80%;
-  max-width: auto;
+  max-width: 70%;
 }
 
 /* Caption of Modal Image */
 #caption {
-  margin: auto;
+/*  margin: auto;
   display: block;
   width: 80%;
   max-width: 700px;
   text-align: center;
   color: #ccc;
   padding: 10px 0;
-  height: 150px;
+  height: 150px;*/
 }
 
 /* Add Animation */
 .modal-content, #caption {  
-  -webkit-animation-name: zoom;
-  -webkit-animation-duration: 0.6s;
-  animation-name: zoom;
-  animation-duration: 0.6s;
+  /*-webkit-animation-name: zoom;*/
+  /*-webkit-animation-duration: 3.6s;*/
+  /*animation-name: zoom;*/
+  /*animation-duration: 6.6s;*/
 }
 
 @-webkit-keyframes zoom {
@@ -57,10 +61,10 @@ body {font-family: Arial, Helvetica, sans-serif;}
   to {-webkit-transform:scale(1)}
 }
 
-@keyframes zoom {
+/*@keyframes zoom {
   from {transform:scale(0)} 
-  to {transform:scale(1)}
-}
+  to {transform:scale(25)}
+}*/
 
 /* The Close Button */
 .close {
