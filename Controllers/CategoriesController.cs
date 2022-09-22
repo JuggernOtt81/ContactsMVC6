@@ -9,24 +9,45 @@ using ContactsMVC6.Data;
 using ContactsMVC6.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
+using ContactsMVC6.Services.Interfaces;
+using Microsoft.AspNetCore.Identity.UI.Services;
 
 namespace ContactsMVC6.Controllers
 {
     public class CategoriesController : Controller
     {
         private readonly ApplicationDbContext _context;
+        //generate a private user manager instance of AppUser
+        private readonly UserManager<AppUser> _userManager;
+        private readonly IImageService _imageService;
+        private readonly IAddressBookService _addressBookService;
+        private readonly IEmailSender _emailService;
 
-        public CategoriesController(ApplicationDbContext context)
+        public CategoriesController(ApplicationDbContext context,
+            UserManager<AppUser> userManager,
+            IImageService imageService,
+            IAddressBookService addressBookService,
+            IEmailSender emailService)
         {
             _context = context;
+            //inject the private user manager here
+            _userManager = userManager;
+            _imageService = imageService;
+            _addressBookService = addressBookService;
+            _emailService = emailService;
         }
 
         // GET: Categories
         [Authorize]
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Categories.Include(c => c.AppUser);
-            return View(await applicationDbContext.ToListAsync());
+            string appUserId = _userManager.GetUserId(User);
+
+            var categories = _context.Categories.Where(c => c.AppUserId == appUserId)
+                .Include(c => c.AppUser)
+                .ToListAsync();
+
+            return View(await categories);
         }
 
         // GET: Categories/Details/5
@@ -53,7 +74,6 @@ namespace ContactsMVC6.Controllers
         [Authorize]
         public IActionResult Create()
         {
-            ViewData["AppUserId"] = new SelectList(_context.Users, "Id", "Id");
             return View();
         }
 
@@ -65,13 +85,16 @@ namespace ContactsMVC6.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,AppUserId,Name")] Category category)
         {
+            ModelState.Remove("AppUserId");
+
             if (ModelState.IsValid)
             {
+                string appUserId = _userManager.GetUserId(User);
+                category.AppUserId = appUserId;
                 _context.Add(category);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AppUserId"] = new SelectList(_context.Users, "Id", "Id", category.AppUserId);
             return View(category);
         }
 
@@ -84,7 +107,10 @@ namespace ContactsMVC6.Controllers
                 return NotFound();
             }
 
-            var category = await _context.Categories.FindAsync(id);
+            string appUserId = _userManager.GetUserId(User);
+
+            var category = await _context.Categories.Where(c => c.Id == id && c.AppUserId == appUserId)
+                                                    .FirstOrDefaultAsync();
             if (category == null)
             {
                 return NotFound();
@@ -110,6 +136,8 @@ namespace ContactsMVC6.Controllers
             {
                 try
                 {
+                    string appUserId = _userManager.GetUserId(User);
+                    if (category.AppUserId == appUserId) { category.AppUserId = appUserId; }
                     _context.Update(category);
                     await _context.SaveChangesAsync();
                 }
@@ -165,14 +193,14 @@ namespace ContactsMVC6.Controllers
             {
                 _context.Categories.Remove(category);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool CategoryExists(int id)
         {
-          return _context.Categories.Any(e => e.Id == id);
+            return _context.Categories.Any(e => e.Id == id);
         }
     }
 }
