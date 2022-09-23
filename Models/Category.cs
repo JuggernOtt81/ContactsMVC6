@@ -22,6 +22,7 @@ namespace ContactsMVC6.Models
         public string? Name { get; set; }
         //virtual
         public virtual AppUser? AppUser { get; set; }
+        //public string? GroupName { get; set; }
         public virtual ICollection<Contact> Contacts { get; set; } = new HashSet<Contact>();
     }
 }

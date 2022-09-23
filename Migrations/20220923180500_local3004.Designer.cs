@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace ContactsMVC6.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220919074421_local-2001")]
-    partial class local2001
+    [Migration("20220923180500_local3004")]
+    partial class local3004
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -166,7 +166,6 @@ namespace ContactsMVC6.Migrations
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("EmailAddress")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("FirstName")
@@ -356,7 +355,7 @@ namespace ContactsMVC6.Migrations
             modelBuilder.Entity("ContactsMVC6.Models.Category", b =>
                 {
                     b.HasOne("ContactsMVC6.Models.AppUser", "AppUser")
-                        .WithMany()
+                        .WithMany("Categories")
                         .HasForeignKey("AppUserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -367,7 +366,7 @@ namespace ContactsMVC6.Migrations
             modelBuilder.Entity("ContactsMVC6.Models.Contact", b =>
                 {
                     b.HasOne("ContactsMVC6.Models.AppUser", "AppUser")
-                        .WithMany()
+                        .WithMany("Contacts")
                         .HasForeignKey("AppUserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -424,6 +423,13 @@ namespace ContactsMVC6.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("ContactsMVC6.Models.AppUser", b =>
+                {
+                    b.Navigation("Categories");
+
+                    b.Navigation("Contacts");
                 });
 #pragma warning restore 612, 618
         }

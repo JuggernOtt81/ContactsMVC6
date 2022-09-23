@@ -9,8 +9,14 @@ using ContactsMVC6.Data;
 using ContactsMVC6.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
+using ContactsMVC6.Enums;
+using ContactsMVC6.Models.ViewModels;
+using ContactsMVC6.Services;
 using ContactsMVC6.Services.Interfaces;
+using System.Collections;
 using Microsoft.AspNetCore.Identity.UI.Services;
+using MimeKit;
+using MailKit;
 
 namespace ContactsMVC6.Controllers
 {
@@ -48,6 +54,53 @@ namespace ContactsMVC6.Controllers
                 .ToListAsync();
 
             return View(await categories);
+        }
+
+        [Authorize]
+        public async Task<IActionResult> EmailCategory(int id)
+        {
+            string appUserId = _userManager.GetUserId(User);
+
+            Category category = await _context.Categories
+                                              .Include(c => c.Contacts)
+                                              .FirstOrDefaultAsync(c => c.Id == id && c.AppUserId == appUserId);
+
+            List<string> emails = category.Contacts.Select(c => c.EmailAddress).ToList();
+
+            EmailData emailData = new EmailData()
+            {
+                GroupName = category.Name,
+                EmailAddress = String.Join(";", emails),
+                Subject = $"Group Message: {category.Name}"
+            };
+
+            EmailCategoryViewModel model = new EmailCategoryViewModel()
+            {
+                Contacts = category.Contacts.ToList(),
+                EmailData = emailData
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> EmailCategory(EmailCategoryViewModel ecvm)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    await _emailService.SendEmailAsync(ecvm.EmailData.EmailAddress, ecvm.EmailData.Subject, ecvm.EmailData.Body);
+                    return RedirectToAction("Index", "Contacts", new { swalMessage = "Success: Email Sent!" });
+                }
+                catch
+                {
+                    return RedirectToAction("Index", "Contacts", new { swalMessage = "Error: Something went wrong." });
+                    throw;
+                }
+            }
+            return View();
         }
 
         // GET: Categories/Details/5

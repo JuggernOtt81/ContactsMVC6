@@ -50,7 +50,7 @@ namespace ContactsMVC6.Models
         [DataType(DataType.PostalCode)]
         public int ZipCode { get; set; }
         [Required]
-        [Display(Name ="Phone Number")]
+        [Display(Name = "Phone Number")]
         [DataType(DataType.PhoneNumber)]
         public string? PhoneNumber { get; set; }
         [Required]

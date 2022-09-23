@@ -58,9 +58,9 @@ namespace ContactsMVC6.Controllers
                                       .Include(c => c.Contacts)
                                       .ThenInclude(c => c.Categories)
                                       .FirstOrDefault(u => u.Id == appUserId);
-            
+
             var categories = appUser.Categories;
-            
+
             if (categoryId == 0)
             {
                 contacts = appUser.Contacts.OrderBy(c => c.LastName)
@@ -91,7 +91,7 @@ namespace ContactsMVC6.Controllers
                                       .Include(_c => _c.Contacts)
                                       .ThenInclude(_c => _c.Categories)
                                       .FirstOrDefault(u => u.Id == appUserId);
-            
+
             if (String.IsNullOrEmpty(searchString))
             {
                 contacts = appUser.Contacts
@@ -127,8 +127,8 @@ namespace ContactsMVC6.Controllers
             {
                 EmailAddress = contact.EmailAddress,
                 FirstName = contact.FirstName,
-                LastName = contact.LastName
-
+                LastName = contact.LastName,
+                FullName = contact.FullName
             };
 
             EmailContactViewModel model = new EmailContactViewModel()
@@ -145,11 +145,11 @@ namespace ContactsMVC6.Controllers
         public async Task<IActionResult> EmailContact(EmailContactViewModel ecvm)
         {
             if (ModelState.IsValid)
-            {                
+            {
                 try
                 {
                     await _emailService.SendEmailAsync(ecvm.EmailData.EmailAddress, ecvm.EmailData.Subject, ecvm.EmailData.Body);
-                    return RedirectToAction("Index", "Contacts", new {swalMessage = "Success: Email Sent!"});
+                    return RedirectToAction("Index", "Contacts", new { swalMessage = "Success: Email Sent!" });
                 }
                 catch
                 {
@@ -246,8 +246,8 @@ namespace ContactsMVC6.Controllers
             //var contact = await _context.Contacts.FindAsync(id);
             string appUserId = _userManager.GetUserId(User);
             var contact = await _context.Contacts.Where(c => c.Id == id && c.AppUserId == appUserId)
-                                                 .FirstOrDefaultAsync();                                              
-            
+                                                 .FirstOrDefaultAsync();
+
             if (contact == null)
             {
                 return NotFound();
@@ -277,7 +277,7 @@ namespace ContactsMVC6.Controllers
                 try
                 {
                     contact.Created = DateTime.SpecifyKind(contact.Created, DateTimeKind.Utc);
-                    if(contact.BirthDate != null)
+                    if (contact.BirthDate != null)
                     {
                         contact.BirthDate = DateTime.SpecifyKind(contact.BirthDate.Value, DateTimeKind.Utc);
                     }
@@ -293,7 +293,7 @@ namespace ContactsMVC6.Controllers
                     //to save new categories:
                     //1: remove current categories
                     List<Category> oldCategories = (await _addressBookService.GetContactCategoriesAsync(contact.Id)).ToList();
-                    foreach(Category category in oldCategories)
+                    foreach (Category category in oldCategories)
                     {
                         await _addressBookService.RemoveContactFromCategoryAsync(category.Id, contact.Id);
                     }
@@ -301,7 +301,7 @@ namespace ContactsMVC6.Controllers
                     foreach (int categoryId in CategoryList)
                     {
                         await _addressBookService.AddContactToCategoryAsync(categoryId, contact.Id);
-                    }                    
+                    }
                 }
                 catch (DbUpdateConcurrencyException)
                 {

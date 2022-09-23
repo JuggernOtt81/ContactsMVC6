@@ -1,8 +1,8 @@
 ﻿namespace ContactsMVC6.Models.ViewModels
 {
-    public class EmailContactViewModel
+    public class EmailCategoryViewModel
     {
-        public Contact? Contact { get; set; }
+        public List<Contact>? Contacts { get; set; }
         public EmailData? EmailData { get; set; }
     }
 }
