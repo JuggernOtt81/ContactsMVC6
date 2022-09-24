@@ -18,7 +18,10 @@ namespace ContactsMVC6.Services
 
         public async Task SendEmailAsync(string email, string subject, string htmlMessage)
         {
-            var emailSender = _mailSettings.Email;
+            //they say the left side is dev machine only and righ machine is for servers - but heroku sends emails before adding
+            // ?? Environment.GetEnvironmentVariable("Email")
+            //so, wtf?
+            var emailSender = _mailSettings.Email ?? Environment.GetEnvironmentVariable("Email");
 
             MimeMessage newEmail = new();
 
@@ -41,9 +44,9 @@ namespace ContactsMVC6.Services
 
             try
             {
-                var host = _mailSettings.Host;
-                var port = _mailSettings.Port;
-                var password = _mailSettings.Password;
+                var host = _mailSettings.Host ?? Environment.GetEnvironmentVariable("Host");
+                var port = _mailSettings.Port != 0 ? _mailSettings.Port : int.Parse(Environment.GetEnvironmentVariable("Port")!);
+                var password = _mailSettings.Password ?? Environment.GetEnvironmentVariable("Password");
 
                 await smtpClient.ConnectAsync(host, port, SecureSocketOptions.StartTls);
                 await smtpClient.AuthenticateAsync(emailSender,password);
