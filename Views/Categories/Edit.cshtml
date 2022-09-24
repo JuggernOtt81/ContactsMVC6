@@ -3,12 +3,12 @@
 @{
     ViewData["Title"] = "Edit";
 }
-
+<div class="p-3" style="background-color:var(--cf-secondaryColorLight); color:var(--cf-primaryColor);">
 <h1>Edit Category</h1>
 
 <div class="row">
     <div class="col-12">
-        <form asp-action="Edit" class="mt-5">
+        <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
             <input type="hidden" asp-for="AppUserId" />
@@ -27,7 +27,7 @@
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
-
+</div>
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

@@ -2,7 +2,7 @@
 
 @{
 }
-
+<div class="p-3" style="background-color:var(--cf-secondaryColorLight); color:var(--cf-primaryColor);">
 <h1>Email Contact: @Model.EmailData.FullName</h1>
 <div class="p-2">
     <form asp-action="EmailContact" asp-controller="Contacts" method="post">
@@ -27,4 +27,5 @@
             </div>
         </div>
     </form>
+</div>
 </div>

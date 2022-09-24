@@ -2,9 +2,9 @@
 
 @{
 }
-
-<h1 class="mt-5">Email Category: @Model.EmailData.GroupName</h1>
-<div class="p-2">
+<div class="p-3" style="background-color:var(--cf-secondaryColorLight); color:var(--cf-primaryColor);">
+<h1>Email Category: @Model.EmailData.GroupName</h1>
+<div class="p-3">
     <form asp-action="EmailCategory" method="post">
         <input type="hidden" asp-for="@Model.EmailData.GroupName" />
         <div class="row row-cols-1 row-cols-md-2 g-3 mb-3">
@@ -27,4 +27,5 @@
             </div>
         </div>
     </form>
+</div>
 </div>

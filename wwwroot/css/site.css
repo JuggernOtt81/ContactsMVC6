@@ -1,14 +1,34 @@
 :root {
-    --cf-primaryColor: #0869b8;
-    --cf-primaryColorDark: #002a4e;
-    --cf-primaryColorLight: #edf5fc;
-    --cf-secondaryColor: #fff0d9;
-    --cf-secondaryColorLight: #FFF8EC;
+    --cf-primaryColor: #212529ff;
+    --cf-primaryColorDark: #e9ecefff;
+    --cf-primaryColorLight: #dee2e6ff;
+    --cf-secondaryColor: #ced4daff;
+    --cf-secondaryColorLight: #adb5bdff;
+    --cf-dark-color: #6c757dff;
+    --cf-light-gray: #d9d9d9;
+    --cf-light-color: #495057ff;
+    --cf-title-font: 'Fira Sans', sans-serif;
+    --cf-body-font: 'Roboto', sans-serif;
+    /*    --cf-primaryColor: #16140E;
+    --cf-primaryColorDark: #624922;
+    --cf-primaryColorLight: #12110D;
+    --cf-secondaryColor: #A88642;
+    --cf-secondaryColorLight: #4A3516;
     --cf-dark-color: #131313;
     --cf-light-gray: #d9d9d9;
     --cf-light-color: #eeeeee;
     --cf-title-font: 'Fira Sans', sans-serif;
-    --cf-body-font: 'Roboto', sans-serif;
+    --cf-body-font: 'Roboto', sans-serif;*/
+    /* CSS HEX */
+    /*    --cultured: #f8f9faff;
+    --cultured-2: #e9ecefff;
+    --gainsboro: #dee2e6ff;
+    --light-gray: #ced4daff;
+    --cadet-blue-crayola: #adb5bdff;
+    --sonic-silver: #6c757dff;
+    --davys-grey: #495057ff;
+    --onyx: #343a40ff;
+    --eerie-black: #212529ff;*/
 }
 
 html,
@@ -26,7 +46,23 @@ body {
     font-weight: 400;
     font-size: 1.2rem;
 }
+.bgbody{
+    background-size:contain;
+    background-image: url("/img/elegant1.jpg");
+    background-color:aliceblue;
+}
+.text-primary {
+    color: var(--cf-primaryColor) !important;
+}
 
+    .text-primary:hover {
+        filter: brightness(1.9) !important;
+        color: var(--cf-light-gray) !important;
+    }
+    .text-danger:hover {
+        filter: brightness(1.9) !important;
+        color: var(--cf-light-gray) !important;
+    }
 /*--Button Overrides --*/
 /*-- Button styles override Bootstrap Styles --*/
 .btn-outline-primary {

@@ -3,14 +3,12 @@
 @{
     ViewData["Title"] = "Index";
 }
-
+<div class="p-3" style="background-color:var(--cf-secondaryColorLight); color:var(--cf-primaryColor);">
 <h1>Categories</h1>
-
-<div class="row mt-5">
+<div class="row">
     <div class="col-12 text-end mb-2">
         <a class="btn btn-primary rounded-pill btnlinks" asp-action="Create">Create New</a>
     </div>
-
 </div>
 <div class="row">
     <div class="col-12">
@@ -31,8 +29,8 @@
                             @Html.DisplayFor(modelItem => item.Name)
                         </td>
                         <td class="d-flex justify-content-end">
-                            <a class="me-3 editIcons" asp-action="Edit" asp-route-id="@item.Id"><i class="bi bi-pencil-fill"></i></a>
-                            <a class="me-3 editIcons" asp-action="EmailCategory" asp-route-id="@item.Id"><i class="bi bi-envelope-fill"></i></a>
+                            <a class="me-3 editIcons text-primary" asp-action="Edit" asp-route-id="@item.Id"><i class="bi bi-pencil-fill"></i></a>
+                            <a class="me-3 editIcons text-primary" asp-action="EmailCategory" asp-route-id="@item.Id"><i class="bi bi-envelope-fill"></i></a>
                             <a class="me-3 editIcons text-danger" asp-action="Delete" asp-route-id="@item.Id"><i class="bi bi-trash-fill"></i></a>
                         </td>
                     </tr>
@@ -40,4 +38,5 @@
             </tbody>
         </table>
     </div>
+</div>
 </div>
