@@ -1,5 +1,4 @@
-﻿@page
-@model ErrorModel
+﻿@model ContactsMVC6.Models.CustomError
 
 <div class="d-flex flex-column justify-content-center">
     <div class="row row-cols-1">
@@ -14,6 +13,10 @@
                 <h5>ERROR:</h5>
                 <p style="font-size:smaller;">We&#39;ve reached an unreachable state.<br> Anything is possible.<br> The limits were in our heads all along.<br> Follow your dreams.</p>
             </div>
+        </div>
+        <div class="col text-center display-5 my-3 fw-bold">@Model.code</div>
+        <div class="col text-center h4">
+            @Model.message
         </div>
         <div class="col text-center mt-3">
             <a asp-action="Index" asp-controller="home" class="btn btn-primary btn-lg rounded-pill">

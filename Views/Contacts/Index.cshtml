@@ -41,32 +41,30 @@
                                 <img src="@ImageService.ConvertByteArrayToFile(contact.ImageData, contact.ImageType)" class="square-img rounded-start">
                             </div>
                             <div class="col-md-8">
-                                <a asp-action="Details" asp-route-id="@contact.Id">
-                                    <div class="card-body">
-                                        <h5 class="card-title">@Html.DisplayFor(modelItem => contact.FullName)</h5>
-                                        <address class="card-text">
-                                            @Html.DisplayFor(modelItem => contact.Address1)<br>
-                                            @if (contact.Address2 != null)
-                                            {
-                                                @Html.DisplayFor(modelItem => contact.Address2)
+                                <div class="card-body">
+                                    <h5 class="card-title">@Html.DisplayFor(modelItem => contact.FullName)</h5>
+                                    <address class="card-text">
+                                        @Html.DisplayFor(modelItem => contact.Address1)<br>
+                                        @if (contact.Address2 != null)
+                                        {
+                                            @Html.DisplayFor(modelItem => contact.Address2)
 
-                                                <br>
-                                            }
-                                            @Html.DisplayFor(modelItem => contact.City), @Html.DisplayFor(modelItem => contact.State) @Html.DisplayFor(modelItem => contact.ZipCode)
-                                        </address>
-                                        <div class="card-text">
-                                            <span class="fw-bold me-2">Phone:</span>@Html.DisplayFor(modelItem => contact.PhoneNumber)
-                                        </div>
-                                        <div class="card-text">
-                                            <span class="fw-bold me-2">Email:</span>@Html.DisplayFor(modelItem => contact.EmailAddress)
-                                        </div>
-                                        <div class="fs-4">
-                                            <a class="me-3 editIcons" asp-action="Edit" asp-route-id="@contact.Id"><i class="bi bi-pencil-fill"></i></a>
-                                            <a class="me-3 editIcons" asp-action="EmailContact" asp-route-id="@contact.Id"><i class="bi bi-envelope-fill"></i></a>
-                                            <a class="me-3 editIcons" asp-action="Delete" asp-route-id="@contact.Id"><i class="bi bi-trash-fill text-danger"></i></a>
-                                        </div>
+                                            <br>
+                                        }
+                                        @Html.DisplayFor(modelItem => contact.City), @Html.DisplayFor(modelItem => contact.State) @Html.DisplayFor(modelItem => contact.ZipCode)
+                                    </address>
+                                    <div class="card-text">
+                                        <span class="fw-bold me-2">Phone:</span>@Html.DisplayFor(modelItem => contact.PhoneNumber)
                                     </div>
-                                </a>
+                                    <div class="card-text">
+                                        <span class="fw-bold me-2">Email:</span>@Html.DisplayFor(modelItem => contact.EmailAddress)
+                                    </div>
+                                    <div class="fs-4">
+                                        <a class="me-3 editIcons" asp-action="Edit" asp-route-id="@contact.Id"><i class="bi bi-pencil-fill"></i></a>
+                                        <a class="me-3 editIcons" asp-action="EmailContact" asp-route-id="@contact.Id"><i class="bi bi-envelope-fill"></i></a>
+                                        <a class="me-3 editIcons" asp-action="Delete" asp-route-id="@contact.Id"><i class="bi bi-trash-fill text-danger"></i></a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

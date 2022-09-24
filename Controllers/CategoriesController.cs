@@ -50,8 +50,8 @@ namespace ContactsMVC6.Controllers
             string appUserId = _userManager.GetUserId(User);
 
             var categories = _context.Categories.Where(c => c.AppUserId == appUserId)
-                .Include(c => c.AppUser)
-                .ToListAsync();
+                                                .Include(c => c.AppUser)
+                                                .ToListAsync();
 
             return View(await categories);
         }
@@ -101,26 +101,6 @@ namespace ContactsMVC6.Controllers
                 }
             }
             return View();
-        }
-
-        // GET: Categories/Details/5
-        [Authorize]
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null || _context.Categories == null)
-            {
-                return NotFound();
-            }
-
-            var category = await _context.Categories
-                .Include(c => c.AppUser)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (category == null)
-            {
-                return NotFound();
-            }
-
-            return View(category);
         }
 
         // GET: Categories/Create

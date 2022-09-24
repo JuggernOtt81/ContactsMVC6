@@ -4,24 +4,16 @@
     ViewData["Title"] = "Delete";
 }
 
-<h1>Delete</h1>
-
-<h3>Are you sure you want to delete this?</h3>
+<h4 mt-5>Are you sure you want to delete this?</h4>
 <div>
-    <h4>Category</h4>
+    <p>Be aware it is entirely <strong>irretrievable!</strong><br>Clicking the <span class="btn btn-danger-outline">Delete</span> button on this page <strong>permanently removes</strong> the record from the database!</p>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
+        <dt class="col-sm-2">
+            Confirm Deletion of:
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Name)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.AppUser)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.AppUser.Id)
         </dd>
     </dl>
     
