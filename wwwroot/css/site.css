@@ -47,9 +47,16 @@ body {
     font-size: 1.2rem;
 }
 .bgbody{
-    background-size:contain;
-    background-image: url("/img/elegant1.jpg");
+    background-size:cover;
+    background-image: url("/img/light-bg-2.png");
     background-color:aliceblue;
+}
+.footer-div{
+    font-variant:small-caps;
+    font-variant-position:sub;
+    font-family:Courier New, Courier, monospace;
+    color:var(--cf-primaryColorLight);
+    background-color:var(--cf-primaryColor);
 }
 .text-primary {
     color: var(--cf-primaryColor) !important;
