@@ -53,10 +53,12 @@ body {
 }
 .footer-div{
     font-variant:small-caps;
-    font-variant-position:sub;
+    /*font-variant-position:sub;*/
+    /*font-family:'Agency FB';*/
     font-family:Courier New, Courier, monospace;
     color:var(--cf-primaryColorLight);
     background-color:var(--cf-primaryColor);
+    text-align:center;
 }
 .text-primary {
     color: var(--cf-primaryColor) !important;
