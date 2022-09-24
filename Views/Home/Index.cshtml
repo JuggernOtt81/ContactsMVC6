@@ -7,11 +7,6 @@
 </style>
 <div class="row align-items-center h-100 ">
     <div class="col-12 col-md-6 col-lg-5 order-last order-md-first">
-        <img id="myImg" src="~/img/u-c-1.png" alt="under construction" style="width:0%;">
-        <div id="myModal" class="modal">
-            <span class="close" style="background-color:black; color:ghostwhite; font-size:larger;"> CLICK HERE TO CLOSE THE MODAL AND ACCESS THE SITE</span>
-            <img class="modal-content mb-5" id="img01">
-        </div>
         <div class="ms-5">
             <h1 class="heroTitle">
                 All your <span class="texthighlight">contacts</span> in
@@ -25,9 +20,6 @@
                 <i class="devicon-bootstrap-plain-wordmark colored icon"></i>
                 <i class="devicon-heroku-plain-wordmark colored icon"></i>
             </div>
-            <div class="text-start mt-5">
-                <a class="btn btn-lg btn-primary rounded-pill w-25">DEMO</a>
-            </div>
         </div>
     </div>
     
@@ -38,36 +30,16 @@
           
 </div>
 <script>
-    // Get the modal
-    var modal = document.getElementById("myModal");
-
-    // Get the image and insert it inside the modal - use its "alt" text as a caption
-    var img = document.getElementById("myImg");
-    var modalImg = document.getElementById("img01");
-    var captionText = document.getElementById("caption");
-    img.onload = function () {
-        modal.style.display = "block";
-        modalImg.src = this.src;
-        captionText.innerHTML = this.alt;
+    function changeImage(){
+        const images = [
+            '<img src="/img/contacts logo-bw.png" class="img-fluid"/>',
+            '<img src="/img/contacts logo-gold.png" class="img-fluid"/>',
+            '<img src="/img/contacts logo-transparent.png" class="img-fluid"/>',
+            '<img src="/img/contacts logo-magma.png" class="img-fluid"/>',
+        ]
+        const div = document.getElementById('swapHere');
+        const swapper = images[Math.floor(Math.random() * images.length) ];
+        div.innerHTML = swapper;
     }
-
-    // Get the <span> element that closes the modal
-    var span = document.getElementsByClassName("close")[0];
-
-    // When the user clicks on <span> (x), close the modal
-    span.onclick = function () {
-        modal.style.display = "none";
-        function changeImage(){
-            const images = [
-                '<img src="/img/contacts logo-bw.png" class="img-fluid"/>',
-                '<img src="/img/contacts logo-gold.png" class="img-fluid"/>',
-                '<img src="/img/contacts logo-transparent.png" class="img-fluid"/>',
-                '<img src="/img/contacts logo-magma.png" class="img-fluid"/>',
-            ]
-            const div = document.getElementById('swapHere');
-            const swapper = images[Math.floor(Math.random() * images.length) ];
-            div.innerHTML = swapper;
-        }
-        setInterval(changeImage, 7500)
-    }
+    setInterval(changeImage, 7500)
 </script>
