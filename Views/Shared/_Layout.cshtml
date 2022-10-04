@@ -40,6 +40,10 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarCollapse">
+                    @if (!SignInManager.IsSignedIn(User))
+                    {
+                        <a class="btn btn-lg btn-primary rounded-pill w-25">DEMO</a>
+                    }
                     <ul class="navbar-nav me-auto mb-2 mb-md-0">
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
@@ -69,20 +73,16 @@
         <div class="row align-items-center py-2">
             <div class="col">
                 <div class="row">
-                    <div class="col-4 d-flex justify-content-start justify-content-md-start footer-div">
-                        <p>
-                            <span>&copy; 2022<br /><a href="https://www.juggernott81.com">Lawson Ott</a></span>
-                        </p>
-                    </div>
-                    <div class="col-4 d-flex justify-content-center justify-content-md-center footer-div">
-                        <p>
-                            <span>Source:<br /><a href="https://github.com/JuggernOtt81/ContactsMVC6">GitHub</a></span>
-                        </p>
-                    </div>
-                    <div class="col-4 d-flex justify-content-end justify-content-md-end footer-div">
-                        <p>
-                            <span>Background:<br /><a href="https://unsplash.com/es/@@hngstrm?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Attribution</a></span>
-                        </p>
+                    <div class="row">
+                        <div class="col-4 d-flex justify-content-start justify-content-md-start footer-div">
+                            <a class="nav-link text-dark" href="https://www.juggernott81.com"><i class="bi bi-c-circle" style="color:slateblue">© 2022 Lawson Ott</i></a>
+                        </div>
+                        <div class="col-4 d-flex justify-content-center justify-content-md-center footer-div">
+                            <a class="nav-link text-dark" href="https://github.com/JuggernOtt81/ContactsMVC6"><i class="bi bi-code-slash" style="color:slateblue"> View Source Code </i><i class="bi bi-github" style="color:slateblue"></i></a>
+                        </div>
+                        <div class="col-4 d-flex justify-content-end justify-content-md-end footer-div">
+                            <a class="nav-link text-dark" href="https://unsplash.com/es/@@hngstrm?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText"><i class="bi bi-image-fill" style="color:slateblue"> Attribution</i></a>
+                        </div>
                     </div>
                 </div>
             </div>
