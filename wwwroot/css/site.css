@@ -47,7 +47,7 @@ body {
     font-size: 1.2rem;
 }
 .bgbody{
-    background-size:cover;
+    background-size:auto;
     background-image: url("/img/light-bg-2.png");
     background-color:aliceblue;
 }
