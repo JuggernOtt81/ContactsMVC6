@@ -1,0 +1,47 @@
+Microsoft Public License (MS-PL) - Amended
+
+This license governs use of the accompanying software. If you use the software, you accept this license. If you do not accept the license, do not use the software.
+
+1. Definitions
+
+The terms "reproduce," "reproduction," "derivative works," and "distribution" have the same meaning here as under U.S. copyright law.
+A "contribution" is the original software, or any additions or changes to the software.
+A "contributor" is any person that distributes its contribution under this license.
+"Licensed patents" are a contributor's patent claims that read directly on its contribution.
+
+2. Grant of Rights
+
+(A) Copyright Grant- Subject to the terms of this license, including the license conditions and limitations in section 3, each contributor grants you a non-exclusive, worldwide, royalty-free copyright license to reproduce its contribution, prepare derivative works of its contribution, and distribute its contribution or any derivative works that you create.
+(B) Patent Grant- Subject to the terms of this license, including the license conditions and limitations in section 3, each contributor grants you a non-exclusive, worldwide, royalty-free license under its licensed patents to make, have made, use, sell, offer for sale, import, and/or otherwise dispose of its contribution in the software or derivative works of the contribution in the software.
+
+3. Conditions and Limitations
+
+(A) No Trademark License- This license does not grant you rights to use any contributors' name, logo, or trademarks.
+(B) If you bring a patent claim against any contributor over patents that you claim are infringed by the software, your patent license from such contributor to the software ends automatically.
+(C) If you distribute any portion of the software, you must retain all copyright, patent, trademark, and attribution notices that are present in the software.
+(D) If you distribute any portion of the software in source code form, you may do so only under this license by including a complete copy of this license with your distribution. If you distribute any portion of the software in compiled or object code form, you may only do so under a license that complies with this license.
+
+This license is an extension of the MS-PL and supersedes any parts of the MS-PL that it may conflict with. Any parts of the MS-PL that are not superseded by this license continue to be governed by the MS-PL.
+
+Retention of Ownership and Custom Contract Requirements:
+
+1. Ownership. The Author retains all ownership of the Code and any associated intellectual property rights. Nothing in this Agreement shall be construed as transferring ownership or any intellectual property rights to the user of the Code.
+
+2. Non-Monetary Use. The user of the Code may use it in non-monetary ways, such as for personal use or for educational purposes. In such cases, the user must credit the Author by linking to the Github page where the Code was shared by the Author.
+
+3. Monetization. If the user of the Code wishes to use it in a manner that may result in monetization for themselves or their clients, a separate custom contract must be in place between the Author and the user. This contract must be signed by both parties and must specify the terms and conditions of the use of the Code for monetization purposes.
+
+4. Disclaimer of Warranties. The Code is provided "as is" without any representations or warranties of any kind, express or implied, including but not limited to warranties of merchantability, fitness for a particular purpose, or non-infringement. The Author makes no representations or warranties in relation to the Code, including its accuracy, reliability, or suitability for any particular purpose.
+
+5. Limitation of Liability. In no event shall the Author be liable for any direct, indirect, incidental, special, or consequential damages, including but not limited to loss of profits, business interruption, or loss of data, arising out of or in connection with the use of the Code.
+
+6. Termination. This Agreement shall remain in effect until terminated by either party. The Author may terminate this Agreement at any time by providing written notice to the user of the Code. Upon termination, the user of the Code must cease all use of the Code and destroy all copies of the Code in their possession.
+
+7. Governing Law. This Agreement shall be governed by and construed in accordance with the laws of the United States of America.
+
+Author: Lawson Ott 
+Username: JuggernOtt81
+Company: Technological Problem Solvers LLC
+
+Effective Date: February 12, 2023
+
